@@ -82,6 +82,15 @@ const displayMovements = function(movements) {
 };
 displayMovements(account1.movements);
 //console.log(containerMovements.innerHTML);
+
+//CALCULATE CURRENT BALANCE
+const calcDisplayBalance = function(movements) {
+	const balance = movements.reduce((acc, mov) => acc + mov, 0);
+	labelBalance.textContent = `${balance} EUR`;
+};
+calcDisplayBalance(account1.movements);
+
+//CREATE A USER NAME
 const createUsernames = function(accs) {
 	accs.forEach(function(acc) {
 		acc.username = acc.owner //see the object for owner, here we have modifide the array adding the username value
@@ -93,7 +102,8 @@ const createUsernames = function(accs) {
 };
 
 createUsernames(accounts);
-console.log(accounts);
+//console.log(accounts);
+
 /////////////////////////////////////////////////
 /////////////////////////////////////////////////
 // LECTURES
