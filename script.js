@@ -91,15 +91,15 @@ const calcDisplayBalance = function(movements) {
 //calcDisplayBalance(account1.movements);
 
 //CALCULATE THE SUM
-const calcDisplaySummary = function(movements) {
-	const incomes = movements.filter((mov) => mov > 0).reduce((acc, mov) => acc + mov, 0);
+const calcDisplaySummary = function(acc) {
+	const incomes = acc.movements.filter((mov) => mov > 0).reduce((acc, mov) => acc + mov, 0);
 	labelSumIn.textContent = `${incomes} €`;
-	const out = movements.filter((mov) => mov < 0).reduce((acc, mov) => acc + mov, 0);
+	const out = acc.movements.filter((mov) => mov < 0).reduce((acc, mov) => acc + mov, 0);
 	labelSumOut.textContent = `${Math.abs(out)}€`;
 	//calculate the interest
-	const interest = movements
+	const interest = acc.movements
 		.filter((mov) => mov > 0)
-		.map((deposit) => deposit * 1.2 / 100)
+		.map((deposit) => deposit * acc.interestRate / 100)
 		.filter((int, i, arr) => {
 			console.log(arr);
 			return int >= 1;
@@ -144,7 +144,7 @@ btnLogin.addEventListener('click', function(e) {
 		// display balance
 		calcDisplayBalance(currentAccount.movements)
 		//display summary
-		calcDisplaySummary(currentAccount.movements)
+		calcDisplaySummary(currentAccount)
 
 		console.log('LOGIN');
 	}
