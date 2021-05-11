@@ -123,6 +123,29 @@ const createUsernames = function(accs) {
 createUsernames(accounts);
 //console.log(accounts);
 
+//Event handler in html the form reloading the page.
+let currentAccount;
+btnLogin.addEventListener('click', function(e) {
+	//Prevent form from submitting
+	e.preventDefault();
+	console.log('LOGIN');
+	currentAccount = accounts.find((acc) => acc.username === inputLoginUsername.value);
+	console.log(currentAccount);
+	if (currentAccount?.pin === Number(inputLoginPin.value)) {
+		//display UI welcome message 
+		labelWelcome.textContent =  `Welcome back ${currentAccount.owner.split(' ')[0]}`
+
+		//display movements
+
+		// display balance
+
+
+		//display summary
+
+		console.log('LOGIN');
+	}
+});
+
 /////////////////////////////////////////////////
 /////////////////////////////////////////////////
 // LECTURES
