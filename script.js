@@ -80,7 +80,7 @@ const displayMovements = function(movements) {
 		containerMovements.insertAdjacentHTML('afterbegin', html);
 	});
 };
-displayMovements(account1.movements);
+//displayMovements(account1.movements);
 //console.log(containerMovements.innerHTML);
 
 //CALCULATE CURRENT BALANCE
@@ -88,7 +88,7 @@ const calcDisplayBalance = function(movements) {
 	const balance = movements.reduce((acc, mov) => acc + mov, 0);
 	labelBalance.textContent = `${balance} €`;
 };
-calcDisplayBalance(account1.movements);
+//calcDisplayBalance(account1.movements);
 
 //CALCULATE THE SUM
 const calcDisplaySummary = function(movements) {
@@ -107,7 +107,7 @@ const calcDisplaySummary = function(movements) {
 		.reduce((acc, int) => acc + int, 0);
 	labelSumInterest.textContent = `${interest} `;
 };
-calcDisplaySummary(account1.movements);
+//calcDisplaySummary(account1.movements);
 
 //CREATE A USER NAME
 const createUsernames = function(accs) {
@@ -134,13 +134,17 @@ btnLogin.addEventListener('click', function(e) {
 	if (currentAccount?.pin === Number(inputLoginPin.value)) {
 		//display UI welcome message 
 		labelWelcome.textContent =  `Welcome back ${currentAccount.owner.split(' ')[0]}`
+        containerApp.style.opacity = 100;
+		//clear the input field
+		inputLoginUsername.value = inputLoginPin.value = '';
+		inputLoginPin.blur();
 
 		//display movements
-
+		displayMovements(currentAccount.movements)
 		// display balance
-
-
+		calcDisplayBalance(currentAccount.movements)
 		//display summary
+		calcDisplaySummary(currentAccount.movements)
 
 		console.log('LOGIN');
 	}
