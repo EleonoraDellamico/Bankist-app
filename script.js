@@ -122,7 +122,14 @@ const createUsernames = function(accs) {
 
 createUsernames(accounts);
 //console.log(accounts);
-
+const updateUI = function(acc){
+		//display movements
+		displayMovements(acc.movements)
+		// display balance
+		calcDisplayBalance(acc)
+		//display summary
+		calcDisplaySummary(acc)
+}
 //Event handler in html the form reloading the page.
 let currentAccount;
 btnLogin.addEventListener('click', function(e) {
@@ -138,13 +145,8 @@ btnLogin.addEventListener('click', function(e) {
 		//clear the input field
 		inputLoginUsername.value = inputLoginPin.value = '';
 		inputLoginPin.blur();
-
-		//display movements
-		displayMovements(currentAccount.movements)
-		// display balance
-		calcDisplayBalance(currentAccount)
-		//display summary
-		calcDisplaySummary(currentAccount)
+//updateUI 
+	updateUI(currentAccount);
 
 		console.log('LOGIN');
 	}
@@ -153,13 +155,16 @@ btnTransfer.addEventListener('click', function(e){
 	e.preventDefault(); 
 	const amount = Number(inputTransferAmount.value);
 	const receiveAcc = accounts.find(acc => acc.username === inputTransferTo.value);
-console.log(amount, receiveAcc )
+//console.log(amount, receiveAcc )
+inputTransferAmount.value = inputTransferTo.value = '';
 if(amount > 0 && 
 receiveAcc && currentAccount.balance >= amount && receiveAcc?.username !== currentAccount.username){
 console.log('transfer valid')
 //Doing the transfer
-currentAccount.movements.push(-movements);
-receiveAcc.movements.push(movements)
+currentAccount.movements.push(-amount);
+receiveAcc.movements.push(amount);
+//updateUI 
+updateUI(currentAccount);
 }
 })
 /////////////////////////////////////////////////
