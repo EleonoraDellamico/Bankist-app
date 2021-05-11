@@ -84,9 +84,9 @@ const displayMovements = function(movements) {
 //console.log(containerMovements.innerHTML);
 
 //CALCULATE CURRENT BALANCE
-const calcDisplayBalance = function(movements) {
-	const balance = movements.reduce((acc, mov) => acc + mov, 0);
-	labelBalance.textContent = `${balance} €`;
+const calcDisplayBalance = function(acc) {
+	acc.balance = acc.movements.reduce((acc, mov) => acc + mov, 0);
+	labelBalance.textContent = `${acc.balance} €`;
 };
 //calcDisplayBalance(account1.movements);
 
@@ -142,14 +142,26 @@ btnLogin.addEventListener('click', function(e) {
 		//display movements
 		displayMovements(currentAccount.movements)
 		// display balance
-		calcDisplayBalance(currentAccount.movements)
+		calcDisplayBalance(currentAccount)
 		//display summary
 		calcDisplaySummary(currentAccount)
 
 		console.log('LOGIN');
 	}
 });
-
+btnTransfer.addEventListener('click', function(e){
+	e.preventDefault(); 
+	const amount = Number(inputTransferAmount.value);
+	const receiveAcc = accounts.find(acc => acc.username === inputTransferTo.value);
+console.log(amount, receiveAcc )
+if(amount > 0 && 
+receiveAcc && currentAccount.balance >= amount && receiveAcc?.username !== currentAccount.username){
+console.log('transfer valid')
+//Doing the transfer
+currentAccount.movements.push(-movements);
+receiveAcc.movements.push(movements)
+}
+})
 /////////////////////////////////////////////////
 /////////////////////////////////////////////////
 // LECTURES
