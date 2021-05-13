@@ -167,6 +167,19 @@ receiveAcc.movements.push(amount);
 updateUI(currentAccount);
 }
 });
+//SOME AND EVERY 
+
+btnLoan.addEventListener('click', function(e){
+	e.preventDefault(); 
+	const amount = Number(inputLoanAmount.value); 
+	if(amount > 0 && currentAccount.movements.some(mov => mov  >= amount * 0.1)){
+//ADD MOV
+currentAccount.movements.push(amount); 
+//UPDATE UI
+updateUI(currentAccount);
+	}
+inputLoanAmount.value= '';
+})
 //CLOSE ACCOUNT DELETE THE ACCOUNT FROM THE ACCOUNTS ARRAY 
 btnClose.addEventListener('click', function (e){
 	e.preventDefault();
@@ -201,7 +214,18 @@ console.log(movements);
 console.log(movements.includes(-130));
 
 
-//CONDITION
+// SOME CONDITION
 console.log(movements.some(mov => mov === -130))
 const anyDeposit = movements.some(mov => mov > 0);
 console.log(anyDeposit);
+
+//EVERY CONDITION 
+console.log(movements.every(mov => mov >0));
+
+//SEPARATE CALLBACK
+
+const deposit = mov => mov > 0; 
+console.log(movements.some(deposit));
+console.log(movements.every(deposit));
+console.log(movements.filter(deposit))
+
