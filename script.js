@@ -166,7 +166,26 @@ receiveAcc.movements.push(amount);
 //updateUI 
 updateUI(currentAccount);
 }
-})
+});
+//CLOSE ACCOUNT DELETE THE ACCOUNT FROM THE ACCOUNTS ARRAY 
+btnClose.addEventListener('click', function (e){
+	e.preventDefault();
+	//console.log('Delete')
+	if (inputCloseUsername.value === currentAccount.username && Number(inputClosePin.value) === currentAccount.pin){
+
+		const index = accounts.findIndex (acc => acc.username === currentAccount.username); 
+		console.log(index)
+        //DELETE ACCOUNT
+		accounts.splice(index, 1);
+		//HIDE UI
+		containerApp.style.opacity = 0; 
+		
+
+	}
+	inputCloseUsername.value = inputClosePin.value = ''; 
+
+}
+)
 /////////////////////////////////////////////////
 /////////////////////////////////////////////////
 // LECTURES
@@ -176,3 +195,13 @@ const currencies = new Map([ [ 'USD', 'United States dollar' ], [ 'EUR', 'Euro' 
 const movements = [ 200, 450, -400, 3000, -650, -130, 70, 1300 ];
 
 /////////////////////////////////////////////////
+console.log(movements);
+
+//EQUALITY
+console.log(movements.includes(-130));
+
+
+//CONDITION
+console.log(movements.some(mov => mov === -130))
+const anyDeposit = movements.some(mov => mov > 0);
+console.log(anyDeposit);
