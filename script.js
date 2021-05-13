@@ -63,11 +63,16 @@ const inputClosePin = document.querySelector('.form__input--pin');
 
 ////////////////////////////////////////////////////////////////
 //we passs parametres to the function better then a global scope
-const displayMovements = function(movements) {
+const displayMovements = function(movements, sort = false) {
 	//to cut html
 	containerMovements.innerHTML = '';
+
+
+
+	//SORTING 
+const movs= sort ? movements.slice().sort((a,b)=> a -b) : movements;
 	//add new part in the html
-	movements.forEach(function(mov, i) {
+	movs.forEach(function(mov, i) {
 		const type = mov > 0 ? 'deposit' : 'withdrawal';
 
 		const html = `
@@ -198,7 +203,13 @@ btnClose.addEventListener('click', function (e){
 	inputCloseUsername.value = inputClosePin.value = ''; 
 
 }
-)
+);
+let sorted = false;
+btnSort.addEventListener('click', function(e){
+	e.preventDefault(); 
+	displayMovements(currentAccount.movements, !sorted);
+	sorted = ! sorted; 
+})
 /////////////////////////////////////////////////
 /////////////////////////////////////////////////
 // LECTURES
@@ -208,24 +219,24 @@ const currencies = new Map([ [ 'USD', 'United States dollar' ], [ 'EUR', 'Euro' 
 const movements = [ 200, 450, -400, 3000, -650, -130, 70, 1300 ];
 
 /////////////////////////////////////////////////
-console.log(movements);
-
-//EQUALITY
-console.log(movements.includes(-130));
+//console.log(movements);
 
 
-// SOME CONDITION
-console.log(movements.some(mov => mov === -130))
-const anyDeposit = movements.some(mov => mov > 0);
-console.log(anyDeposit);
+/* const accountsMovements = accounts.map(acc => acc.movements); 
+console.log(accountsMovements)
+const allMovements = accountsMovements.flat();
+console.log(allMovements)
+const overBalance = allMovements.reduce( (acc,mov) => acc + mov,0);
+console.log(overBalance);
+ */
 
-//EVERY CONDITION 
-console.log(movements.every(mov => mov >0));
+//refactoring 
+/* const overBalance = accounts.map(acc => acc.movements).flat().reduce((acc, mov)=> acc + mov, 0);
+console.log(overBalance); */
 
-//SEPARATE CALLBACK
 
-const deposit = mov => mov > 0; 
-console.log(movements.some(deposit));
-console.log(movements.every(deposit));
-console.log(movements.filter(deposit))
-
+//FlatMAp cobine flat and map in one method only for i¡one level nested.
+/* const overBalance2 = accounts
+.flatMap(acc => acc.movements)
+.reduce((acc, mov)=> acc + mov, 0);
+console.log(overBalance); */
